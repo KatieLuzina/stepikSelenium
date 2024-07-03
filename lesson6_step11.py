@@ -1,41 +1,47 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+import unittest
 
-try:
-    link = "http://suninjuly.github.io/registration2.html"
-    browser = webdriver.Chrome()
-    browser.get(link)
 
-    # Ваш код, который заполняет обязательные поля
+class Test1(unittest.TestCase):
+    def test_1(self):
+        link = "http://suninjuly.github.io/registration2.html"
+        browser = webdriver.Chrome()
+        browser.get(link)
 
-    element1 = browser.find_element(by='css selector', value='input.first[required]')
-    element1.send_keys("Ivan")
+        # Ваш код, который заполняет обязательные поля
 
-    element2 = browser.find_element(by='css selector', value='input.second[required]')
-    element2.send_keys("Petrov")
+        element1 = browser.find_element(by='css selector', value='input.first[required]')
+        element1.send_keys("Ivan")
 
-    element2 = browser.find_element(by='css selector', value='input.third[required]')
-    element2.send_keys("ivan@test.ru")
+        element2 = browser.find_element(by='css selector', value='input.second[required]')
+        element2.send_keys("Petrov")
 
-    # Отправляем заполненную форму
-    button = browser.find_element(By.CSS_SELECTOR, "button.btn")
-    button.click()
+        element2 = browser.find_element(by='css selector', value='input.third[required]')
+        element2.send_keys("ivan@test.ru")
 
-    # Проверяем, что смогли зарегистрироваться
-    # ждем загрузки страницы
-    time.sleep(1)
+        # Отправляем заполненную форму
+        button = browser.find_element(By.CSS_SELECTOR, "button.btn")
+        button.click()
 
-    # находим элемент, содержащий текст
-    welcome_text_elt = browser.find_element(By.TAG_NAME, "h1")
-    # записываем в переменную welcome_text текст из элемента welcome_text_elt
-    welcome_text = welcome_text_elt.text
+        # Проверяем, что смогли зарегистрироваться
+        # ждем загрузки страницы
+        time.sleep(1)
 
-    # с помощью assert проверяем, что ожидаемый текст совпадает с текстом на странице сайта
-    assert "Congratulations! You have successfully registered!" == welcome_text
+        # находим элемент, содержащий текст
+        welcome_text_elt = browser.find_element(By.TAG_NAME, "h1")
+        # записываем в переменную welcome_text текст из элемента welcome_text_elt
+        welcome_text = welcome_text_elt.text
 
-finally:
-    # ожидание чтобы визуально оценить результаты прохождения скрипта
-    time.sleep(10)
-    # закрываем браузер после всех манипуляций
-    browser.quit()
+        # с помощью assert проверяем, что ожидаемый текст совпадает с текстом на странице сайта
+        self.assertEqual("Congratulations! You have successfully registered!", welcome_text)
+
+        # ожидание чтобы визуально оценить результаты прохождения скрипта
+        time.sleep(10)
+        # закрываем браузер после всех манипуляций
+        browser.quit()
+
+
+if __name__ == "__main__":
+    unittest.main()
